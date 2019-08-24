@@ -1,0 +1,19 @@
+{
+    "name": "diego-karabin/csv-to-array",
+    "description": "Library to convert .csv files into associative array.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Diego Karabin",
+            "email": "diegokarabin@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "CsvToArray\\": "src/CsvToArray/"
+        }
+    }
+}
