@@ -4,35 +4,22 @@ namespace CsvToArray;
 
 class CsvToArray
 {
-	private static function remove_double_quotes($str)
+	public static function parse_file($file_name)
 	{
-		return str_replace('"', '', $str);
+		return self::parse_str(file_get_contents($file_name));
 	}
 
-	private static function split_csv_line_to_array($str_line)
+	public static function parse_str($str_data)
 	{
-		$str_line = str_replace("\r", '', $str_line);
-
-		return array_map(
-			function ($element) {
-				return self::remove_double_quotes($element);
-			},
-			explode('","', $str_line)
-		);
-	}
-
-	public static function parse_strcsv_to_array($str_data)
-	{
-		$array_lines = explode("\n", $str_data);
-                $array_keys = self::split_csv_line_to_array(array_shift($array_lines));
+		$array_lines = array_map('str_getcsv', explode("\n", $str_data));
+		$array_keys = array_shift($array_lines);
 		$array_data = array();
 
 		foreach ($array_lines as $line) {
-			$array_record_data = self::split_csv_line_to_array($line);
 			$array_record = array();
 
 			foreach ($array_keys as $index => $key) {
-				$array_record[$key] = $array_record_data[$index];
+				$array_record[$key] = $line[$index];
 			}
 
 			$array_data[] = $array_record;
