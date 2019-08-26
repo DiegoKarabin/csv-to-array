@@ -12,7 +12,12 @@ class CsvToArray
 	public static function parse_str($str_data)
 	{
 		$array_lines = array_map('str_getcsv', explode("\n", $str_data));
-		$array_keys = array_shift($array_lines);
+		$array_keys = array_map(
+			function ($element) {
+				return str_replace(' ', '_', trim(strtolower($element)));
+			},
+			array_shift($array_lines)
+		);
 		$array_data = array();
 
 		foreach ($array_lines as $line) {
