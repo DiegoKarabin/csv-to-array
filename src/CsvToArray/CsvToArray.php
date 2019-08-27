@@ -4,20 +4,23 @@ namespace CsvToArray;
 
 class CsvToArray
 {
-	public static function parse_file($file_name)
+	public static function parse_file($file_name, $clean_headers = true)
 	{
-		return self::parse_str(file_get_contents($file_name));
+		return self::parse_str(file_get_contents($file_name), $clean_headers);
 	}
 
-	public static function parse_str($str_data)
+	public static function parse_str($str_data, $clean_headers = true)
 	{
 		$array_lines = array_map('str_getcsv', explode("\n", $str_data));
-		$array_keys = array_map(
-			function ($element) {
-				return str_replace(' ', '_', trim(strtolower($element)));
-			},
-			array_shift($array_lines)
-		);
+		$headers = array_shift($array_lines);
+		$array_keys = $clean_headers
+		    ? array_map(
+				function ($element) {
+					return str_replace(' ', '_', trim(strtolower($element)));
+				},
+				$headers
+			  )
+			: $headers;
 		$array_data = array();
 
 		foreach ($array_lines as $line) {
