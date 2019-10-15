@@ -34,7 +34,9 @@ class CsvToArray
 			$array_record = array();
 
 			foreach ($array_keys as $index => $key) {
-				$array_record[$key] = $line[$index];
+				if (isset($line[$index])) {
+					$array_record[$key] = $line[$index];
+				}
 			}
 
 			$array_data[] = $array_record;
