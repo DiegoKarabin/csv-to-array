@@ -31,7 +31,13 @@ class CsvToArray
 		$array_data = array();
 
 		foreach ($array_lines as $line) {
-			if (count($line)) {
+			$is_line_empty = array_reduce($line,
+			    function($result, $cell) {
+					return $result |= empty($cell);
+				},
+			false);
+
+			if (!$is_line_empty) {
 				$array_record = array();
 
 				foreach ($array_keys as $index => $key) {
