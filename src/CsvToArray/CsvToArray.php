@@ -31,15 +31,17 @@ class CsvToArray
 		$array_data = array();
 
 		foreach ($array_lines as $line) {
-			$array_record = array();
+			if (count($line)) {
+				$array_record = array();
 
-			foreach ($array_keys as $index => $key) {
-				if (isset($line[$index])) {
-					$array_record[$key] = $line[$index];
+				foreach ($array_keys as $index => $key) {
+					if (isset($line[$index])) {
+						$array_record[$key] = $line[$index];
+					}
 				}
-			}
 
-			$array_data[] = $array_record;
+				$array_data[] = $array_record;
+			}
 		}
 
 		return $array_data;
